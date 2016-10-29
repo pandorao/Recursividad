@@ -1,26 +1,35 @@
-
-//import java.util.ArrayList;
-//import java.util.LinkedList;
 public class Graph {
 
     int vertices, aristas;
     boolean[][] adj;
-//    ArrayList<ArrayList<Integer>> adjl;
+    int[][] vertexMatrix;
 
-    public Graph(int Vertices, int Aristas) {
-        this.vertices = Vertices;
-        this.aristas = Aristas;
-        adj = new boolean[Vertices + 1][Vertices + 1];
-//        adjl = new ArrayList<ArrayList<Integer>>();
-//        for (int i = 0; i <= Vertices; i++) {
-//            adjl.add(new ArrayList<Integer>());
-//        }
+    public Graph(int vertices, Maze maze) {
+        int contAristas = 0;
+        this.vertices = vertices;
+        adj = new boolean[vertices + 1][vertices + 1];
+        enumerateVertexMatrix(maze);
+        int[][] matrix = maze.getMatrix();
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(j < cols-1 && matrix[i][j] == 0 && matrix[i][j+1] == 0){
+                    addEdge(vertexMatrix[i][j], vertexMatrix[i][j+1]);
+                    contAristas++;
+                }
+                if(i < rows-1 && matrix[i][j] == 0 && matrix[i+1][j] == 0){
+                    addEdge(vertexMatrix[i][j], vertexMatrix[i+1][j]);
+                    contAristas++;
+                }
+            }
+        }
+        
+        this.aristas = contAristas;
     }
 
-    public void addEdge(int a, int b) {
+    public final void addEdge(int a, int b) {
         adj[a][b] = adj[b][a] = true;
-//        adjl.get(a).add(b);
-//        adjl.get(b).add(a);
     }
 
     boolean[] visitado;
@@ -34,23 +43,20 @@ public class Graph {
         }
     }
 
-    private int[][] nombrevertices(Maze mat) {
+    private void enumerateVertexMatrix(Maze mat) {
         int cont = 1;
         int filas = mat.getMatrix().length;
         int columnas = mat.getMatrix()[0].length;
-        int[][] matrix = new int[filas][columnas];
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 if (mat.getMatrix()[i][j]==0) {
-                    matrix[i][j] = cont;
+                    vertexMatrix[i][j] = cont;
                     cont++;
                 } else {
-                    matrix[i][j] = 0;
+                    vertexMatrix[i][j] = 0;
                 }
             }
         }
-        
-        return matrix;
     }
 
 }
