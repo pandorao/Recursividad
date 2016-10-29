@@ -12,4 +12,20 @@ public class Maze {
             {1,0,3,0}
         };
     }
+
+    public int[][] getMatrix() {
+        return matrix;
+    }
+    
+    public int contador_vertices(){
+        int cont=0;
+        for (int[] i: matrix) {
+            for (int j: i) {
+                if(j==0){
+                    cont++;
+                }
+            }
+        }
+        return cont;
+    }
 }
