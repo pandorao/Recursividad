@@ -1,9 +1,8 @@
 
 //import java.util.ArrayList;
 //import java.util.LinkedList;
-
-
 public class Graph {
+
     int vertices, aristas;
     boolean[][] adj;
 //    ArrayList<ArrayList<Integer>> adjl;
@@ -35,6 +34,23 @@ public class Graph {
         }
     }
 
+    private int[][] nombrevertices(Maze mat) {
+        int cont = 1;
+        int filas = mat.getMatrix().length;
+        int columnas = mat.getMatrix()[0].length;
+        int[][] matrix = new int[filas][columnas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (mat.getMatrix()[i][j]==0) {
+                    matrix[i][j] = cont;
+                    cont++;
+                } else {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        return matrix;
+    }
 
-    
 }
