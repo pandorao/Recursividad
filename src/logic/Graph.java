@@ -12,15 +12,13 @@ public class Graph {
         adj = new boolean[vertices + 1][vertices + 1];
         enumerateVertexMatrix(maze);
         int[][] matrix = maze.getMatrix();
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                if(j < cols-1 && matrix[i][j] == 0 && matrix[i][j+1] == 0){
+        for(int i = 0; i < maze.filas; i++){
+            for(int j = 0; j < maze.columnas; j++){
+                if(j < maze.columnas-1 && matrix[i][j] == 0 && matrix[i][j+1] == 0){
                     addEdge(vertexMatrix[i][j], vertexMatrix[i][j+1]);
                     contEdges++;
                 }
-                if(i < rows-1 && matrix[i][j] == 0 && matrix[i+1][j] == 0){
+                if(i < maze.filas-1 && matrix[i][j] == 0 && matrix[i+1][j] == 0){
                     addEdge(vertexMatrix[i][j], vertexMatrix[i+1][j]);
                     contEdges++;
                 }
@@ -47,10 +45,8 @@ public class Graph {
 
     private void enumerateVertexMatrix(Maze mat) {
         int cont = 1;
-        int rows = mat.getMatrix().length;
-        int cols = mat.getMatrix()[0].length;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < mat.filas; i++) {
+            for (int j = 0; j < mat.columnas; j++) {
                 if (mat.getMatrix()[i][j]==0) {
                     vertexMatrix[i][j] = cont;
                     cont++;
@@ -59,6 +55,27 @@ public class Graph {
                 }
             }
         }
+    }
+    
+        public int[][] camino_minimo(){
+        int[][] camino = {
+            {0,0},
+            {0,1},
+            {0,2},
+            {0,3},
+            {0,4},
+            {0,5},
+            {1,5},
+            {2,5},
+            {2,4},
+            {3,4},
+            {4,4},
+            {4,3},
+            {4,2},
+            {3,2}
+        };
+        
+        return camino;
     }
 
 }

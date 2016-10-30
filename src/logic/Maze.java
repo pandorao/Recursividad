@@ -4,8 +4,9 @@ public class Maze {
     private final int[][] matrix;
     public static final int VACUUM = 0;
     public static final int BLOCK = 1;
-    public static final int X = 2;
-    public static final int CIRCLE = 3;
+    private static final int ROAD = 2;
+        public int filas;
+    public int columnas;
     
     public Maze(){
         matrix = new int[][]{
@@ -18,6 +19,8 @@ public class Maze {
             {0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1},
             {1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0}
         };
+           this.filas = matrix.length;
+        this.columnas = matrix[0].length;
     }
 
     public int[][] getMatrix() {
@@ -34,5 +37,13 @@ public class Maze {
             }
         }
         return cont;
+    }
+    
+    public int[][] Matrix_with_Road(int[][] camino) {
+        int[][] mat = matrix;
+        for (int[] camino1 : camino) {
+            mat[camino1[0]][camino1[1]] = ROAD;
+        }
+        return mat;
     }
 }
