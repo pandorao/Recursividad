@@ -1,3 +1,5 @@
+package logic;
+
 public class Maze {
     private final int[][] matrix;
     public static final int VACUUM = 0;
