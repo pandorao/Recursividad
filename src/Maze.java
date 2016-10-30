@@ -22,7 +22,7 @@ public class Maze {
         return matrix;
     }
     
-    public int contador_vertices(){
+    public int vertexCount(){
         int cont=0;
         for (int[] i: matrix) {
             for (int j: i) {
