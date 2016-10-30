@@ -1,9 +1,9 @@
 public class Maze {
     private final int[][] matrix;
-    private static final int VACUUM = 0;
-    private static final int BLOCK = 1;
-    private static final int X = 2;
-    private static final int CIRCLE = 3;
+    public static final int VACUUM = 0;
+    public static final int BLOCK = 1;
+    public static final int X = 2;
+    public static final int CIRCLE = 3;
     
     public Maze(){
         matrix = new int[][]{
