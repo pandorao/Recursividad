@@ -12,19 +12,19 @@ public class Graph {
         adj = new boolean[vertices + 1][vertices + 1];
         enumerateVertexMatrix(maze);
         int[][] matrix = maze.getMatrix();
-        for(int i = 0; i < maze.filas; i++){
-            for(int j = 0; j < maze.columnas; j++){
-                if(j < maze.columnas-1 && matrix[i][j] == 0 && matrix[i][j+1] == 0){
-                    addEdge(vertexMatrix[i][j], vertexMatrix[i][j+1]);
+        for (int i = 0; i < maze.filas; i++) {
+            for (int j = 0; j < maze.columnas; j++) {
+                if (j < maze.columnas - 1 && matrix[i][j] == 0 && matrix[i][j + 1] == 0) {
+                    addEdge(vertexMatrix[i][j], vertexMatrix[i][j + 1]);
                     contEdges++;
                 }
-                if(i < maze.filas-1 && matrix[i][j] == 0 && matrix[i+1][j] == 0){
-                    addEdge(vertexMatrix[i][j], vertexMatrix[i+1][j]);
+                if (i < maze.filas - 1 && matrix[i][j] == 0 && matrix[i + 1][j] == 0) {
+                    addEdge(vertexMatrix[i][j], vertexMatrix[i + 1][j]);
                     contEdges++;
                 }
             }
         }
-        
+
         this.edges = contEdges;
     }
 
@@ -43,18 +43,21 @@ public class Graph {
         }
     }
 
-    private void enumerateVertexMatrix(Maze mat) {
+    private void enumerateVertexMatrix(Maze maze) {
         int cont = 1;
-        for (int i = 0; i < mat.filas; i++) {
-            for (int j = 0; j < mat.columnas; j++) {
-                if (mat.getMatrix()[i][j]==0) {
+        vertexMatrix = new int[maze.filas][maze.columnas];
+        int[][] matrix = maze.getMatrix();
+        for (int i = 0; i < maze.filas; i++) {
+            for (int j = 0; j < maze.columnas; j++) {
+                if (matrix[i][j] == 0) {
                     vertexMatrix[i][j] = cont;
                     cont++;
                 } else {
                     vertexMatrix[i][j] = 0;
                 }
+                System.out.print(vertexMatrix[i][j] + "     ");
             }
         }
     }
-    
+
 }

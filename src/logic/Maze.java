@@ -41,6 +41,7 @@ public class Maze {
     }
 
     public int[][] Matrix_with_Road(int[][] camino) {
+        //camino debe ser un arreglo de dos dimensiones que siempre tendra dos columnas y en el que cada fila es una coordenada, la primera columna es la coordenada en x y la segunda fila es la coordenada en y
         int[][] mat = matrix;
         for (int[] camino1 : camino) {
             mat[camino1[0]][camino1[1]] = ROAD;
