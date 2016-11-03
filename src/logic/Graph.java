@@ -8,7 +8,7 @@ public class Graph {
 
     public Graph(Maze maze) {
         int contEdges = 0;
-        this.vertices = maze.vertexCount();
+//        this.vertices = maze.vertexCount();
         adj = new boolean[vertices + 1][vertices + 1];
         enumerateVertexMatrix(maze);
         int[][] matrix = maze.getMatrix();
