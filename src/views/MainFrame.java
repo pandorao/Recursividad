@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import logic.Maze;
 
 public class MainFrame extends javax.swing.JFrame {
-    private final int IMAGE_SIZE = 50;
+    private final int IMAGE_SIZE = 45;
     private final Maze maze;
     private int[][] panelMatrix; 
     public MainFrame() {
@@ -23,29 +23,42 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel(){
+        jPanel1 =
+        new javax.swing.JPanel(){
             public void paint(Graphics g){
-                super.paint(g);
                 int filas = panelMatrix.length;
                 int columnas = panelMatrix[0].length;
-                for (int i = 0; i < filas; i++) {
-                    for (int j = 0; j < columnas; j++) {
-                        switch (panelMatrix[i][j]) {
-                            case Maze.BLOCK:
+                g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                for (int i = 0; i < filas + 1; i++) {
+                    for (int j = 0; j < columnas + 1; j++) {
+                        if(i > 0 && j > 0){
+                            switch (panelMatrix[i - 1][j - 1]) {
+                                case Maze.BLOCK:
+                                g.setColor(Color.RED);
+                                break;
+                                case Maze.VACUUM:
+                                g.setColor(Color.WHITE);
+                                break;
+                                case Maze.ROAD:
+                                g.setColor(Color.GREEN);
+                                break;
+                            }
+                            g.fillRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE, IMAGE_SIZE);
                             g.setColor(Color.BLACK);
-                            break;
-                            case Maze.VACUUM:
-                            g.setColor(Color.YELLOW);
-                            break;
-                            case Maze.ROAD:
-                            g.setColor(Color.RED);
-                            break;
+                            g.drawRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE, IMAGE_SIZE);
                         }
-                        g.fillRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE - 1, IMAGE_SIZE - 1);
+                        g.setColor(Color.BLACK);
+                        if(i == 0 && j > 0){
+                            g.drawString("" + (j - 1), (IMAGE_SIZE * j) + (IMAGE_SIZE / 2) + 1, (IMAGE_SIZE * i) + (7 * IMAGE_SIZE / 8));
+                        }
+                        if(j == 0 && i > 0){
+                            g.drawString("" + (i - 1), (IMAGE_SIZE * j) + (3 * IMAGE_SIZE / 4), (IMAGE_SIZE * i) + (IMAGE_SIZE / 2) + 1);
+                        }
                     }
                 }
             }
-        };
+        }
+        ;
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -71,7 +84,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 418, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Coordenada De Partida:");
@@ -117,8 +130,8 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

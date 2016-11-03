@@ -63,8 +63,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <Component id="jPanel1" pref="418" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -105,7 +105,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    public void paint(Graphics g){&#xa;        super.paint(g);&#xa;        int filas = panelMatrix.length;&#xa;        int columnas = panelMatrix[0].length;&#xa;        for (int i = 0; i &lt; filas; i++) {&#xa;            for (int j = 0; j &lt; columnas; j++) {&#xa;                switch (panelMatrix[i][j]) {&#xa;                    case Maze.BLOCK:&#xa;                    g.setColor(Color.BLACK);&#xa;                    break;&#xa;                    case Maze.VACUUM:&#xa;                    g.setColor(Color.YELLOW);&#xa;                    break;&#xa;                    case Maze.ROAD:&#xa;                    g.setColor(Color.RED);&#xa;                    break;&#xa;                }&#xa;                g.fillRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE - 1, IMAGE_SIZE - 1);&#xa;            }&#xa;        }&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xa;new javax.swing.JPanel(){&#xa;    public void paint(Graphics g){&#xa;        int filas = panelMatrix.length;&#xa;        int columnas = panelMatrix[0].length;&#xa;        g.setFont(new java.awt.Font(&quot;Arial&quot;, java.awt.Font.BOLD, 14));&#xa;        for (int i = 0; i &lt; filas + 1; i++) {&#xa;            for (int j = 0; j &lt; columnas + 1; j++) {&#xa;                if(i &gt; 0 &amp;&amp; j &gt; 0){&#xa;                    switch (panelMatrix[i - 1][j - 1]) {&#xa;                        case Maze.BLOCK:&#xa;                        g.setColor(Color.RED);&#xa;                        break;&#xa;                        case Maze.VACUUM:&#xa;                        g.setColor(Color.WHITE);&#xa;                        break;&#xa;                        case Maze.ROAD:&#xa;                        g.setColor(Color.GREEN);&#xa;                        break;&#xa;                    }&#xa;                    g.fillRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE, IMAGE_SIZE);&#xa;                    g.setColor(Color.BLACK);&#xa;                    g.drawRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE, IMAGE_SIZE);&#xa;                }&#xa;                g.setColor(Color.BLACK);&#xa;                if(i == 0 &amp;&amp; j &gt; 0){&#xa;                    g.drawString(&quot;&quot; + (j - 1), (IMAGE_SIZE * j) + (IMAGE_SIZE / 2) + 1, (IMAGE_SIZE * i) + (7 * IMAGE_SIZE / 8));&#xa;                }&#xa;                if(j == 0 &amp;&amp; i &gt; 0){&#xa;                    g.drawString(&quot;&quot; + (i - 1), (IMAGE_SIZE * j) + (3 * IMAGE_SIZE / 4), (IMAGE_SIZE * i) + (IMAGE_SIZE / 2) + 1);&#xa;                }&#xa;            }&#xa;        }&#xa;    }&#xa;}&#xa;"/>
       </AuxValues>
 
       <Layout>
@@ -116,7 +116,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="418" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
