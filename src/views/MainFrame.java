@@ -35,13 +35,13 @@ public class MainFrame extends javax.swing.JFrame {
                             g.setColor(Color.BLACK);
                             break;
                             case Maze.VACUUM:
-                            g.setColor(Color.WHITE);
+                            g.setColor(Color.YELLOW);
                             break;
                             case Maze.ROAD:
                             g.setColor(Color.RED);
                             break;
                         }
-                        g.fillRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE, IMAGE_SIZE);
+                        g.fillRect(IMAGE_SIZE * j, IMAGE_SIZE * i, IMAGE_SIZE - 1, IMAGE_SIZE - 1);
                     }
                 }
             }
