@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import logic.Maze;
 
@@ -11,6 +12,9 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         maze = new Maze();
         panelMatrix = maze.getMatrix();
+        this.setMaximumSize(new Dimension((maze.columnas + 3) * IMAGE_SIZE, (maze.filas + 5) * IMAGE_SIZE));
+        this.setMinimumSize(new Dimension((maze.columnas + 3) * IMAGE_SIZE, (maze.filas + 5) * IMAGE_SIZE));
+        this.setPreferredSize(new Dimension((maze.columnas + 3) * IMAGE_SIZE, (maze.filas + 5) * IMAGE_SIZE));
         initComponents();
     }
     
@@ -25,6 +29,11 @@ public class MainFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 =
         new javax.swing.JPanel(){
+            {
+                this.setMaximumSize(new Dimension((maze.columnas + 3) * IMAGE_SIZE, (maze.filas + 5) * IMAGE_SIZE));
+                this.setMinimumSize(new Dimension((maze.columnas + 3) * IMAGE_SIZE, (maze.filas + 5) * IMAGE_SIZE));
+                this.setPreferredSize(new Dimension((maze.columnas + 3) * IMAGE_SIZE, (maze.filas + 5) * IMAGE_SIZE));
+            }
             public void paint(Graphics g){
                 int filas = panelMatrix.length;
                 int columnas = panelMatrix[0].length;
