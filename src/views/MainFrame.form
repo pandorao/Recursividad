@@ -152,6 +152,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Version Recursiva"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="buttonGroup1.add(jRadioButton1);&#xd;&#xa;buttonGroup1.add(jRadioButton2);&#xd;&#xa;jRadioButton1.setSelected(true);&#xd;&#xa;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
