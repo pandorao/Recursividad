@@ -8,13 +8,13 @@ import logic.Maze;
 import logic.ReceivedDataValidator;
 
 public class MainFrame extends javax.swing.JFrame {
-
-    private final Maze maze;
+    
+    private Maze maze;
     private int boxSize;
     private int[][] panelMatrix;
 
-    public MainFrame() {
-        maze = new Maze();
+    public MainFrame(Maze maze) {
+        this.maze = maze;
         panelMatrix = maze.getMatrix();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         int aux;
