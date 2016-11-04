@@ -40,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
             public void paint(Graphics g){
                 int filas = panelMatrix.length;
                 int columnas = panelMatrix[0].length;
-                g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 10));
                 for (int i = 0; i < filas + 1; i++) {
                     for (int j = 0; j < columnas + 1; j++) {
                         if(i > 0 && j > 0){
