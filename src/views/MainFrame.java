@@ -3,24 +3,25 @@ package views;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import logic.Maze;
+import logic.ReceivedDataValidator;
 
 public class MainFrame extends javax.swing.JFrame {
 
     private final Maze maze;
     private int boxSize;
     private int[][] panelMatrix;
-    
 
     public MainFrame() {
         maze = new Maze();
         panelMatrix = maze.getMatrix();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         int aux;
-        if (maze.filas > maze.columnas) {
-            aux = maze.filas;
+        if (maze.getFilas() > maze.getColumnas()) {
+            aux = maze.getFilas();
         } else {
-            aux = maze.columnas;
+            aux = maze.getColumnas();
         }
         boxSize = (331 * aux * aux / 3432) - (6373 * aux / 1144) + (43090 / 429);// ecuacion que define el tamaño de cada casilla dependiendo del mayor entre las filas y las columnas del laberinto
         // valores con los que se hizo la regresion cuadratica para hallar la ecuacion
@@ -71,11 +72,11 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         ;
-        txtFldInitX = new javax.swing.JTextField();
+        txtFldInitFil = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtFldMetFil = new javax.swing.JTextField();
+        btnGetRoad = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         buttonGroup1.add(jRadioButton1);
@@ -85,8 +86,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtFldInitCol = new javax.swing.JTextField();
+        txtFldMetCol = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,23 +110,28 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Coordenada De llegada:");
 
-        jTextField2.setAutoscrolls(false);
+        txtFldMetFil.setAutoscrolls(false);
 
-        jButton1.setText("Generar Camino");
+        btnGetRoad.setText("Generar Camino");
+        btnGetRoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetRoadActionPerformed(evt);
+            }
+        });
 
         jRadioButton1.setText("Version Iterativa");
 
         jRadioButton2.setText("Version Recursiva");
 
-        jLabel3.setText("X:");
+        jLabel3.setText("Fila:");
 
-        jLabel4.setText("X:");
+        jLabel4.setText("Fila:");
 
-        jLabel5.setText("Y:");
+        jLabel5.setText("Columna:");
 
-        jLabel6.setText("Y:");
+        jLabel6.setText("Columna:");
 
-        jTextField4.setAutoscrolls(false);
+        txtFldMetCol.setAutoscrolls(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,22 +151,22 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                            .addComponent(txtFldInitX))
+                            .addComponent(txtFldMetFil, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                            .addComponent(txtFldInitFil))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFldMetCol)
+                            .addComponent(txtFldInitCol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton1)
                             .addComponent(jRadioButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnGetRoad)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -180,25 +186,25 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFldInitCol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel5))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFldMetCol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel6)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(txtFldInitX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFldInitFil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1)
                                         .addComponent(jLabel3))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel2)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtFldMetFil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel4))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jButton1)))
+                        .addComponent(btnGetRoad)))
                 .addContainerGap())
         );
 
@@ -206,9 +212,18 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGetRoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetRoadActionPerformed
+        int aux = ReceivedDataValidator.validateCoordinatesInput(txtFldInitFil.getText(), txtFldInitCol.getText(), txtFldMetFil.getText(), txtFldMetCol.getText(), maze);
+        if (aux == ReceivedDataValidator.VALIDATION_SUCCES) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, ReceivedDataValidator.getErrorDescription(aux), "", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGetRoadActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGetRoad;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -218,9 +233,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField txtFldInitX;
+    private javax.swing.JTextField txtFldInitCol;
+    private javax.swing.JTextField txtFldInitFil;
+    private javax.swing.JTextField txtFldMetCol;
+    private javax.swing.JTextField txtFldMetFil;
     // End of variables declaration//GEN-END:variables
 }

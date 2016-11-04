@@ -6,8 +6,8 @@ public class Maze {
     public static final int VACUUM = 0;
     public static final int BLOCK = 1;
     public static final int ROAD = 2;
-    public int filas;
-    public int columnas;
+    private int filas;
+    private int columnas;
     private String toVisit;
     private boolean[] visited;
     private int[] parents;
@@ -42,8 +42,6 @@ public class Maze {
 //            {0, 0, 0, 0, 1},
 //            {1, 1, 0, 0, 0}
 //        };
-        
-        
 //        matrix = new int[][]{
 //            {0, 0, 0, 0, 0},
 //            {1, 1, 1, 1, 1},
@@ -58,7 +56,6 @@ public class Maze {
 //            {0, 0, 0, 0, 1},
 //            {1, 1, 0, 0, 0}
 //        };
-
 //        matrix = new int[][]{
 //            {0, 0, 0, 0, 0},
 //            {1, 1, 1, 1, 1},
@@ -66,7 +63,6 @@ public class Maze {
 //            {0, 1, 0, 1, 0},
 //            {0, 1, 0, 0, 0}
 //        };
-        
         matrix = new int[][]{
             {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0},
             {1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0},
@@ -98,6 +94,14 @@ public class Maze {
         return matrix;
     }
 
+    public int getFilas() {
+        return filas;
+    }
+
+    public int getColumnas() {
+        return columnas;
+    }
+
 //    AUN NO HE DECIDIDO SI VOY A USAR ESTOS DOS METODOS
 //    public int vertexCount() {
 //        int cont = 0;
@@ -124,7 +128,7 @@ public class Maze {
         return x > 0 && x < filas * columnas;
     }
 
-    private boolean isBlock(int x) {
+    public boolean isBlock(int x) {
         int[] aux = getCoordinateFromNumber(x);
         return matrix[aux[0]][aux[1]] == BLOCK;
     }
@@ -172,11 +176,11 @@ public class Maze {
         return mat;
     }
 
-    private int getNumberFromCoordinate(int fil, int col) {
+    public int getNumberFromCoordinate(int fil, int col) {
         return (fil * columnas) + col + 1;
     }
 
-    private int[] getCoordinateFromNumber(int num) {
+    public int[] getCoordinateFromNumber(int num) {
         int fil = div(num - 1, columnas);
         int col = (num - 1) % columnas;
         return new int[]{fil, col};
