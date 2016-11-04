@@ -172,9 +172,4 @@ public class Maze {
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
 
-    static class s {
-
-        public s() {
-        }
-    }
 }
