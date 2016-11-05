@@ -227,7 +227,11 @@ public class MainFrame extends javax.swing.JFrame {
 //            g.setColor(Color.BLACK);
 //            g.fillRect(0, 0, 100, 100);
             panelMatrix = maze.getShortestRoadIntoMatrix(initNum, metNum);
-            jPanel1.repaint();
+            if (panelMatrix == null) {
+                JOptionPane.showMessageDialog(null, "No existe ningun camino que una estas casillas", "", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                jPanel1.repaint();
+            }
         } else {
             JOptionPane.showMessageDialog(null, ReceivedDataValidator.getErrorDescription(aux), "", JOptionPane.ERROR_MESSAGE);
         }
