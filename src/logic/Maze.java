@@ -17,13 +17,24 @@ public class Maze {
         this.filas = filas;
         this.columnas = columnas;
         this.bloqueados = bloqueados;
-        int cont=1, i=0, j=0, num;
         matrix = new int[filas][columnas];
-        while (cont<=bloqueados){
-            while (i < filas && cont <= bloqueados) {
-                while (j < columnas && cont <= bloqueados) {
+        int i = 0;
+        ConstructorMaze(i, bloqueados / 2, filas / 2);
+        i = filas / 2;
+        if (bloqueados % 2 != 0) {
+            ConstructorMaze(i, bloqueados / 2 + 1, filas);
+        } else {
+            ConstructorMaze(i, bloqueados / 2 , filas);
+        }
+    }
+
+    private void ConstructorMaze(int i, int bloq, int filas) {
+        int cont = 1, j = 0, num;
+        while (cont <= bloq) {
+            while (i < filas && cont <= bloq) {
+                while (j < columnas && cont <= bloq) {
                     num = (int) (Math.random() * 2 + 0);
-                    if (matrix[i][j] != 1 && num==1) {
+                    if (matrix[i][j] != 1 && num == 1) {
                         matrix[i][j] = num;
                         cont++;
                     }
@@ -32,11 +43,11 @@ public class Maze {
                 j = 0;
                 i++;
             }
-            i=0;
-            j=0;
+            i = 0;
+            j = 0;
         }
     }
-    
+
     public int[][] getMatrix() {
         return matrix;
     }
@@ -171,5 +182,4 @@ public class Maze {
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
-
 }
