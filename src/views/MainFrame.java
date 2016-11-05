@@ -8,7 +8,7 @@ import logic.Maze;
 import logic.ReceivedDataValidator;
 
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private Maze maze;
     private int boxSize;
     private int[][] panelMatrix;
@@ -77,11 +77,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtFldMetFil = new javax.swing.JTextField();
         btnGetRoad = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        buttonGroup1.add(jRadioButton1);
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton1.setSelected(true);
+        RBtton_iterativo = new javax.swing.JRadioButton();
+        RBtton_recursivo = new javax.swing.JRadioButton();
+        buttonGroup1.add(RBtton_iterativo);
+        buttonGroup1.add(RBtton_recursivo);
+        RBtton_iterativo.setSelected(true);
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -119,9 +119,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setText("Version Iterativa");
+        RBtton_iterativo.setText("Version Iterativa");
 
-        jRadioButton2.setText("Version Recursiva");
+        RBtton_recursivo.setText("Version Recursiva");
 
         jLabel3.setText("Fila:");
 
@@ -163,8 +163,8 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(txtFldInitCol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(RBtton_iterativo)
+                            .addComponent(RBtton_recursivo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGetRoad)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -180,9 +180,9 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(RBtton_iterativo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2))
+                                .addComponent(RBtton_recursivo))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -228,7 +228,11 @@ public class MainFrame extends javax.swing.JFrame {
 //            g.fillRect(0, 0, 100, 100);
             panelMatrix = maze.getMatrix();
             jPanel1.update(jPanel1.getGraphics());
-            panelMatrix = maze.getShortestRoadIntoMatrix(initNum, metNum);
+            if (RBtton_iterativo.isSelected()) {
+                panelMatrix = maze.getShortestRoadIntoMatrix(initNum, metNum);
+            } else {
+                panelMatrix = maze.getShortestRoadIntoMatrix_R(initNum, metNum);
+            }
             if (panelMatrix == null) {
                 JOptionPane.showMessageDialog(null, "No existe ningun camino que una estas casillas", "", JOptionPane.PLAIN_MESSAGE);
             } else {
@@ -240,6 +244,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGetRoadActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton RBtton_iterativo;
+    private javax.swing.JRadioButton RBtton_recursivo;
     private javax.swing.JButton btnGetRoad;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
@@ -249,8 +255,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField txtFldInitCol;
     private javax.swing.JTextField txtFldInitFil;
     private javax.swing.JTextField txtFldMetCol;

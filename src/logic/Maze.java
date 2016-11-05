@@ -24,7 +24,7 @@ public class Maze {
         if (bloqueados % 2 != 0) {
             ConstructorMaze(i, bloqueados / 2 + 1, filas);
         } else {
-            ConstructorMaze(i, bloqueados / 2 , filas);
+            ConstructorMaze(i, bloqueados / 2, filas);
         }
     }
 
@@ -59,6 +59,7 @@ public class Maze {
     public int getColumnas() {
         return columnas;
     }
+
     private boolean isBetweenLimits(int son, int parent) {
         if (son > 0 && son <= filas * columnas) {
             if (parent % columnas == 0 && son == parent + 1) {
@@ -204,4 +205,127 @@ public class Maze {
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
+    //----------------------------------------
+    //METODO PARA CAMINO MAS CORTO RECURSIVO
+    //METODO PARA CAMINO MAS CORTO RECURSIVO
+    //METODO PARA CAMINO MAS CORTO RECURSIVO
+    private void assingParentsInit_R(int ini, int meta) {
+        toVisit = "";
+        visited = new boolean[filas * columnas + 1];
+        parents = new int[filas * columnas + 1];
+        newToVisit(ini);
+        visited[ini] = true;
+        assignParents_R(meta);
+    }
+
+    private void assignParents_R(int meta) {// el metodo recibe como argumentos la version numerica de las coordenada de la casilla inicial y la casilla final, para obtener la version umerica de una coordenada se usa el metodo getNumberFromCoordinate
+        if (!toVisit.equals("")) {
+            int actual = getFirstToVisitAndRemove_R();
+            int aux = actual + columnas;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
+                markCoordinate(aux, actual, meta);
+            }
+            aux = actual - 1;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
+                markCoordinate(aux, actual, meta);
+            }
+            aux = actual + 1;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
+                markCoordinate(aux, actual, meta);
+            }
+            aux = actual - columnas;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
+                markCoordinate(aux, actual, meta);
+            }
+            assignParents_R(meta);
+        }
+    }
+
+    public int[][] getShortestRoadIntoMatrix_R(int ini, int meta) {// el metodo recibe como argumentos la version numerica de las coordenada de la casilla inicial y la casilla final, para obtener la version umerica de una coordenada se usa el metodo getNumberFromCoordinate
+        int[][] mat = new int[matrix.length][matrix[0].length];
+        copyMat_Ri(matrix, matrix.length, matrix[0].length, 0, 0, mat);
+        assingParentsInit_R(ini, meta);
+        int actual = meta;
+        int[] aux = null;
+        if (parents[meta] != 0) {
+            getShortestRoadIntoMatrix_R(mat, aux, actual, ini);
+            aux = getCoordinateFromNumber_R(ini);
+            mat[aux[0]][aux[1]] = ROAD;
+        } else {
+            return null;
+        }
+        return mat;
+    }
+
+    private void getShortestRoadIntoMatrix_R(int[][] mat, int[] aux, int actual, int ini) {
+        aux = getCoordinateFromNumber(actual);
+        mat[aux[0]][aux[1]] = ROAD;
+        actual = parents[actual];
+        if (actual != ini) {
+            getShortestRoadIntoMatrix_R(mat, aux, actual, ini);
+        }
+    }
+
+    public int[] getCoordinateFromNumber_R(int num) {
+        int fil = div_R(num, columnas, 0);
+        int col = (num - 1) % columnas;
+        return new int[]{fil, col};
+    }
+
+    private int div_R(int numerator, int divisor, int div) {
+        if (numerator > divisor) {
+            numerator -= divisor;
+            div++;
+            return div_R(numerator, divisor, div);
+        } else {
+            return div;
+        }
+    }
+
+    private void copyMat_Ri(int[][] matri, int fil, int col, int i, int j, int[][] mat) {
+        if (i < fil) {
+            j = 0;
+            copyMat_Rj(matri, col, i, j, mat);
+            i++;
+            copyMat_Ri(matri, fil, col, i, j, mat);
+        }
+    }
+
+    private void copyMat_Rj(int[][] matri, int col, int i, int j, int[][] mat) {
+        if (j < col) {
+            mat[i][j] = matri[i][j];
+            j++;
+            copyMat_Rj(matri, col, i, j, mat);
+        }
+    }
+    
+        private int getFirstToVisitAndRemove_R() {
+        int aux = indexOf_R(toVisit, ",", toVisit.length(), 0);
+        int ret;
+        String s;
+        if (aux == -1) {
+            s = toVisit.substring(0);
+            ret = Integer.parseInt(s);
+            toVisit = "";
+        } else {
+            s = toVisit.substring(0, aux);
+            ret = Integer.parseInt(s);
+            toVisit = toVisit.substring(aux + 1);
+        }
+        return ret;
+    }
+        
+    private int indexOf_R(String s, String c, int len, int i) {
+        if (i < len) {
+            if (s.substring(i, i + 1).equals(c)) {
+                return i;
+            }
+            i++;
+            return indexOf_R(s, c, len, i);
+        }
+        return -1;
+    }
+    //METODO PARA CAMINO MAS CORTO RECURSIVO
+    //METODO PARA CAMINO MAS CORTO RECURSIVO
+    //METODO PARA CAMINO MAS CORTO RECURSIVO
 }
