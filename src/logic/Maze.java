@@ -124,8 +124,17 @@ public class Maze {
 //        return mat;
 //    }
 //    AUN NO HE DECIDIDO SI VOY A USAR ESTOS DOS METODOS
-    private boolean isBetweenLimits(int x) {
-        return x > 0 && x < filas * columnas;
+    private boolean isBetweenLimits(int son, int parent) {
+        if (son > 0 && son <= filas * columnas) {
+            if (parent % columnas == 0 && son == parent + 1) {
+                return false;
+            }
+            if (parent % columnas == 1 && son == parent - 1) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public boolean isBlock(int x) {
@@ -144,24 +153,23 @@ public class Maze {
         visited[ini] = true;
         while (!toVisit.equals("")) {
             int actual = getLastToVisitAndRemove();
-            int aux = actual + 1;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
+            int aux = actual + columnas;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
                 markCoordinate(aux, actual, meta);
             }
             aux = actual - 1;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
+                markCoordinate(aux, actual, meta);
+            }
+            aux = actual + 1;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
                 markCoordinate(aux, actual, meta);
             }
             aux = actual - columnas;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
-                markCoordinate(aux, actual, meta);
-            }
-            aux = actual + columnas;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
                 markCoordinate(aux, actual, meta);
             }
         }
-
     }
 
     public int[][] getShortestRoadIntoMatrix(int ini, int meta) {// el metodo recibe como argumentos la version numerica de las coordenada de la casilla inicial y la casilla final, para obtener la version umerica de una coordenada se usa el metodo getNumberFromCoordinate
@@ -181,7 +189,7 @@ public class Maze {
     }
 
     public int[] getCoordinateFromNumber(int num) {
-        int fil = div(num - 1, columnas);
+        int fil = div(num, columnas);
         int col = (num - 1) % columnas;
         return new int[]{fil, col};
     }
@@ -207,18 +215,36 @@ public class Maze {
 
     private void newToVisit(int newToVisit) {
         if (toVisit.equals("")) {
-            toVisit = "" + newToVisit;
+            toVisit += "" + newToVisit;
         } else {
-            toVisit = "-" + newToVisit;
+            toVisit += "," + newToVisit;
         }
     }
 
     private int getLastToVisitAndRemove() {
         int len = toVisit.length();
-        String s = toVisit.substring(len - 1);
-        int ret = Integer.parseInt(s);
-        toVisit = toVisit.substring(0, len - 1);
+        int aux = lastIndexOf(toVisit, ",");
+        int ret;
+        String s;
+        if (aux == -1) {
+            s = toVisit.substring(0);
+            ret = Integer.parseInt(s);
+            toVisit = "";
+        } else {
+            s = toVisit.substring(aux + 1, len);
+            ret = Integer.parseInt(s);
+            toVisit = toVisit.substring(0, aux);
+        }
         return ret;
+    }
+
+    private int lastIndexOf(String s, String c) {
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.substring(i, i + 1).equals(c)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
