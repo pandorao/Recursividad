@@ -59,31 +59,17 @@ public class Maze {
     public int getColumnas() {
         return columnas;
     }
-
-//    AUN NO HE DECIDIDO SI VOY A USAR ESTOS DOS METODOS
-//    public int vertexCount() {
-//        int cont = 0;
-//        for (int[] i : matrix) {
-//            for (int j : i) {
-//                if (j == 0) {
-//                    cont++;
-//                }
-//            }
-//        }
-//        return cont;
-//    }
-//
-//    public int[][] Matrix_with_Road(int[][] camino) {
-//        //camino debe ser un arreglo de dos dimensiones que siempre tendra dos columnas y en el que cada fila es una coordenada, la primera columna es la coordenada en x y la segunda fila es la coordenada en y
-//        int[][] mat = matrix;
-//        for (int[] camino1 : camino) {
-//            mat[camino1[0]][camino1[1]] = ROAD;
-//        }
-//        return mat;
-//    }
-//    AUN NO HE DECIDIDO SI VOY A USAR ESTOS DOS METODOS
-    private boolean isBetweenLimits(int x) {
-        return x > 0 && x < filas * columnas;
+    private boolean isBetweenLimits(int son, int parent) {
+        if (son > 0 && son <= filas * columnas) {
+            if (parent % columnas == 0 && son == parent + 1) {
+                return false;
+            }
+            if (parent % columnas == 1 && son == parent - 1) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public boolean isBlock(int x) {
@@ -101,35 +87,41 @@ public class Maze {
         newToVisit(ini);
         visited[ini] = true;
         while (!toVisit.equals("")) {
-            int actual = getLastToVisitAndRemove();
-            int aux = actual + 1;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
+            int actual = getFirstToVisitAndRemove();
+            int aux = actual + columnas;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
                 markCoordinate(aux, actual, meta);
             }
             aux = actual - 1;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
+                markCoordinate(aux, actual, meta);
+            }
+            aux = actual + 1;
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
                 markCoordinate(aux, actual, meta);
             }
             aux = actual - columnas;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
-                markCoordinate(aux, actual, meta);
-            }
-            aux = actual + columnas;
-            if (isBetweenLimits(aux) && !isBlock(aux) && !visited[aux]) {
+            if (isBetweenLimits(aux, actual) && !visited[aux] && !isBlock(aux)) {
                 markCoordinate(aux, actual, meta);
             }
         }
-
     }
 
     public int[][] getShortestRoadIntoMatrix(int ini, int meta) {// el metodo recibe como argumentos la version numerica de las coordenada de la casilla inicial y la casilla final, para obtener la version umerica de una coordenada se usa el metodo getNumberFromCoordinate
-        int[][] mat = matrix;
+        int[][] mat = copyMat(matrix);
         assignParents(ini, meta);
         int actual = meta;
-        while (actual != ini) {
-            int[] aux = getCoordinateFromNumber(actual);
+        int[] aux;
+        if (parents[meta] != 0) {
+            do {
+                aux = getCoordinateFromNumber(actual);
+                mat[aux[0]][aux[1]] = ROAD;
+                actual = parents[actual];
+            } while (actual != ini);
+            aux = getCoordinateFromNumber(actual);
             mat[aux[0]][aux[1]] = ROAD;
-            actual = parents[actual];
+        } else {
+            return null;
         }
         return mat;
     }
@@ -139,7 +131,7 @@ public class Maze {
     }
 
     public int[] getCoordinateFromNumber(int num) {
-        int fil = div(num - 1, columnas);
+        int fil = div(num, columnas);
         int col = (num - 1) % columnas;
         return new int[]{fil, col};
     }
@@ -153,29 +145,59 @@ public class Maze {
         return div;
     }
 
-    private void markCoordinate(int num, int parent, int meta) {
-        visited[num] = true;
-        parents[num] = parent;
-        if (num == meta) {
+    private void markCoordinate(int son, int parent, int meta) {
+        visited[son] = true;
+        parents[son] = parent;
+        if (son == meta) {
             toVisit = "";
         } else {
-            newToVisit(num);
+            newToVisit(son);
         }
     }
 
     private void newToVisit(int newToVisit) {
         if (toVisit.equals("")) {
-            toVisit = "" + newToVisit;
+            toVisit += "" + newToVisit;
         } else {
-            toVisit = "-" + newToVisit;
+            toVisit += "," + newToVisit;
         }
     }
 
-    private int getLastToVisitAndRemove() {
-        int len = toVisit.length();
-        String s = toVisit.substring(len - 1);
-        int ret = Integer.parseInt(s);
-        toVisit = toVisit.substring(0, len - 1);
+    private int getFirstToVisitAndRemove() {
+        int aux = indexOf(toVisit, ",");
+        int ret;
+        String s;
+        if (aux == -1) {
+            s = toVisit.substring(0);
+            ret = Integer.parseInt(s);
+            toVisit = "";
+        } else {
+            s = toVisit.substring(0, aux);
+            ret = Integer.parseInt(s);
+            toVisit = toVisit.substring(aux + 1);
+        }
+        return ret;
+    }
+
+    private int indexOf(String s, String c) {
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            if (s.substring(i, i + 1).equals(c)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int[][] copyMat(int[][] mat) {
+        int fil = mat.length;
+        int col = mat[0].length;
+        int[][] ret = new int[fil][col];
+        for (int i = 0; i < fil; i++) {
+            for (int j = 0; j < col; j++) {
+                ret[i][j] = mat[i][j];
+            }
+        }
         return ret;
     }
 

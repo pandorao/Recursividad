@@ -215,7 +215,25 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnGetRoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetRoadActionPerformed
         int aux = ReceivedDataValidator.validateCoordinatesInput(txtFldInitFil.getText(), txtFldInitCol.getText(), txtFldMetFil.getText(), txtFldMetCol.getText(), maze);
         if (aux == ReceivedDataValidator.VALIDATION_SUCCES) {
-
+            int initFil = Integer.parseInt(txtFldInitFil.getText());
+            int initCol = Integer.parseInt(txtFldInitCol.getText());
+            int metFil = Integer.parseInt(txtFldMetFil.getText());
+            int metCol = Integer.parseInt(txtFldMetCol.getText());
+            int initNum = maze.getNumberFromCoordinate(initFil, initCol);
+            int metNum = maze.getNumberFromCoordinate(metFil, metCol);
+//            panelMatrix = maze.getMatrix();
+//            jPanel1.repaint();
+//            Graphics g = jPanel1.getGraphics();
+//            g.setColor(Color.BLACK);
+//            g.fillRect(0, 0, 100, 100);
+            panelMatrix = maze.getMatrix();
+            jPanel1.update(jPanel1.getGraphics());
+            panelMatrix = maze.getShortestRoadIntoMatrix(initNum, metNum);
+            if (panelMatrix == null) {
+                JOptionPane.showMessageDialog(null, "No existe ningun camino que una estas casillas", "", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                jPanel1.update(jPanel1.getGraphics());
+            }
         } else {
             JOptionPane.showMessageDialog(null, ReceivedDataValidator.getErrorDescription(aux), "", JOptionPane.ERROR_MESSAGE);
         }
