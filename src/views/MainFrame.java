@@ -226,11 +226,13 @@ public class MainFrame extends javax.swing.JFrame {
 //            Graphics g = jPanel1.getGraphics();
 //            g.setColor(Color.BLACK);
 //            g.fillRect(0, 0, 100, 100);
+            panelMatrix = maze.getMatrix();
+            jPanel1.update(jPanel1.getGraphics());
             panelMatrix = maze.getShortestRoadIntoMatrix(initNum, metNum);
             if (panelMatrix == null) {
                 JOptionPane.showMessageDialog(null, "No existe ningun camino que una estas casillas", "", JOptionPane.PLAIN_MESSAGE);
             } else {
-                jPanel1.repaint();
+                jPanel1.update(jPanel1.getGraphics());
             }
         } else {
             JOptionPane.showMessageDialog(null, ReceivedDataValidator.getErrorDescription(aux), "", JOptionPane.ERROR_MESSAGE);

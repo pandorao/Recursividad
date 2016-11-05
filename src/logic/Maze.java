@@ -85,7 +85,6 @@ public class Maze {
 //            {0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},
 //            {0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0}
 //        };
-
         this.filas = matrix.length;
         this.columnas = matrix[0].length;
     }
@@ -173,7 +172,7 @@ public class Maze {
     }
 
     public int[][] getShortestRoadIntoMatrix(int ini, int meta) {// el metodo recibe como argumentos la version numerica de las coordenada de la casilla inicial y la casilla final, para obtener la version umerica de una coordenada se usa el metodo getNumberFromCoordinate
-        int[][] mat = matrix;
+        int[][] mat = copyMat(matrix);
         assignParents(ini, meta);
         int actual = meta;
 //        int[] aux = getCoordinateFromNumber(actual);
@@ -255,6 +254,18 @@ public class Maze {
             }
         }
         return -1;
+    }
+
+    private int[][] copyMat(int[][] mat) {
+        int fil = mat.length;
+        int col = mat[0].length;
+        int[][] ret = new int[fil][col];
+        for (int i = 0; i < fil; i++) {
+            for (int j = 0; j < col; j++) {
+                ret[i][j] = mat[i][j];
+            }
+        }
+        return ret;
     }
 
     //METODOS PARA CAMINO MAS CORTO ITERATIVOS
