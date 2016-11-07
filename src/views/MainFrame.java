@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import logic.Maze;
 import logic.ReceivedDataValidator;
 
@@ -213,6 +214,9 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGetRoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetRoadActionPerformed
+        Long t = System.nanoTime();
+//        Long t = System.currentTimeMillis();
+
         int aux = ReceivedDataValidator.validateCoordinatesInput(txtFldInitFil.getText(), txtFldInitCol.getText(), txtFldMetFil.getText(), txtFldMetCol.getText(), maze);
         if (aux == ReceivedDataValidator.VALIDATION_SUCCES) {
             int initFil = Integer.parseInt(txtFldInitFil.getText());
@@ -221,11 +225,6 @@ public class MainFrame extends javax.swing.JFrame {
             int metCol = Integer.parseInt(txtFldMetCol.getText());
             int initNum = maze.getNumberFromCoordinate(initFil, initCol);
             int metNum = maze.getNumberFromCoordinate(metFil, metCol);
-//            panelMatrix = maze.getMatrix();
-//            jPanel1.repaint();
-//            Graphics g = jPanel1.getGraphics();
-//            g.setColor(Color.BLACK);
-//            g.fillRect(0, 0, 100, 100);
             panelMatrix = maze.getMatrix();
             jPanel1.update(jPanel1.getGraphics());
             if (RBtton_iterativo.isSelected()) {
@@ -241,8 +240,27 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, ReceivedDataValidator.getErrorDescription(aux), "", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnGetRoadActionPerformed
 
+//        t = System.currentTimeMillis() - t;
+//        double c = (double)t * 0.001;
+//        System.out.println(t);
+        t = System.nanoTime() - t;
+        double c = (double) t * 0.000000001;
+        System.out.println(c);
+
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Used memory is bytes: " + memory);
+        double mem = ((double) memory / (1024 * 1024));
+        System.out.println("Used memory is megabytes: " + mem);
+
+    }//GEN-LAST:event_btnGetRoadActionPerformed
+    public static double bytesToMegabytes(long bytes) {
+        return ((double) (bytes)) / (1024 * 1024);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RBtton_iterativo;
     private javax.swing.JRadioButton RBtton_recursivo;
