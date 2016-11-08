@@ -2,7 +2,6 @@ package logic;
 
 import javax.swing.JOptionPane;
 import views.MainFrame;
-import logic.*;
 
 public class Main {
 
