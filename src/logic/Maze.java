@@ -24,10 +24,9 @@ public class Maze {
                 matrix[k][l] = 0;
             }
         }
-        int f = filas, c = columnas;
         while (cont <= bloqueados) {
-            i = (int) Math.floor(Math.random() * f + 0);
-            j = (int) Math.floor(Math.random() * c + 0);
+            i = (int) Math.floor(Math.random() * filas + 0);
+            j = (int) Math.floor(Math.random() * columnas + 0);
             if (matrix[i][j] == 0) {
                 matrix[i][j] = 1;
                 cont++;
