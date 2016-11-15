@@ -18,36 +18,51 @@ public class Maze {
         this.columnas = columnas;
         this.bloqueados = bloqueados;
         matrix = new int[filas][columnas];
-        int i = 0;
-        ConstructorMaze(i, bloqueados / 2, filas / 2);
-        i = filas / 2;
-        if (bloqueados % 2 != 0) {
-            ConstructorMaze(i, bloqueados / 2 + 1, filas);
-        } else {
-            ConstructorMaze(i, bloqueados / 2, filas);
-        }
-    }
-
-    private void ConstructorMaze(int i, int bloq, int filas) {
-        int cont = 1, j = 0, num;
-        while (cont <= bloq) {
-            while (i < filas && cont <= bloq) {
-                while (j < columnas && cont <= bloq) {
-                    num = (int) (Math.random() * 2 + 0);
-                    if (matrix[i][j] != 1 && num == 1) {
-                        matrix[i][j] = num;
-                        cont++;
-                    }
-                    j++;
-                }
-                j = 0;
-                i++;
+        int cont = 0, i, j;
+        for (int k = 0; k < filas; k++) {
+            for (int l = 0; l < columnas; l++) {
+                matrix[k][l] = 0;
             }
-            i = 0;
-            j = 0;
         }
+        int f = filas, c = columnas;
+        while (cont <= bloqueados) {
+            i = (int) Math.floor(Math.random() * f + 0);
+            j = (int) Math.floor(Math.random() * c + 0);
+            if (matrix[i][j] == 0) {
+                matrix[i][j] = 1;
+                cont++;
+            }
+        }
+
+//        int i = 0;
+//        ConstructorMaze(i, bloqueados / 2, filas / 2);
+//        i = filas / 2;
+//        if (bloqueados % 2 != 0) {
+//            ConstructorMaze(i, bloqueados / 2 + 1, filas);
+//        } else {
+//            ConstructorMaze(i, bloqueados / 2, filas);
+//        }
     }
 
+//    private void ConstructorMaze(int i, int bloq, int filas) {
+//        int cont = 1, j = 0, num;
+//        while (cont <= bloq) {
+//            while (i < filas && cont <= bloq) {
+//                while (j < columnas && cont <= bloq) {
+//                    num = (int) (Math.random() * 2 + 0);
+//                    if (matrix[i][j] != 1 && num == 1) {
+//                        matrix[i][j] = num;
+//                        cont++;
+//                    }
+//                    j++;
+//                }
+//                j = 0;
+//                i++;
+//            }
+//            i = 0;
+//            j = 0;
+//        }
+//    }
     public int[][] getMatrix() {
         return matrix;
     }
@@ -274,9 +289,7 @@ public class Maze {
 
     private int div_R(int numerator, int divisor, int div) {
         if (numerator > divisor) {
-            numerator -= divisor;
-            div++;
-            return div_R(numerator, divisor, div);
+            return div_R(numerator - divisor, divisor, div + 1);
         } else {
             return div;
         }
@@ -286,20 +299,18 @@ public class Maze {
         if (i < fil) {
             j = 0;
             copyMat_Rj(matri, col, i, j, mat);
-            i++;
-            copyMat_Ri(matri, fil, col, i, j, mat);
+            copyMat_Ri(matri, fil, col, i + 1, j, mat);
         }
     }
 
     private void copyMat_Rj(int[][] matri, int col, int i, int j, int[][] mat) {
         if (j < col) {
             mat[i][j] = matri[i][j];
-            j++;
-            copyMat_Rj(matri, col, i, j, mat);
+            copyMat_Rj(matri, col, i, j + 1, mat);
         }
     }
-    
-        private int getFirstToVisitAndRemove_R() {
+
+    private int getFirstToVisitAndRemove_R() {
         int aux = indexOf_R(toVisit, ",", toVisit.length(), 0);
         int ret;
         String s;
@@ -314,14 +325,13 @@ public class Maze {
         }
         return ret;
     }
-        
+
     private int indexOf_R(String s, String c, int len, int i) {
         if (i < len) {
             if (s.substring(i, i + 1).equals(c)) {
                 return i;
             }
-            i++;
-            return indexOf_R(s, c, len, i);
+            return indexOf_R(s, c, len, i + 1);
         }
         return -1;
     }
