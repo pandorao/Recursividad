@@ -33,36 +33,8 @@ public class Maze {
                 cont++;
             }
         }
-
-//        int i = 0;
-//        ConstructorMaze(i, bloqueados / 2, filas / 2);
-//        i = filas / 2;
-//        if (bloqueados % 2 != 0) {
-//            ConstructorMaze(i, bloqueados / 2 + 1, filas);
-//        } else {
-//            ConstructorMaze(i, bloqueados / 2, filas);
-//        }
     }
 
-//    private void ConstructorMaze(int i, int bloq, int filas) {
-//        int cont = 1, j = 0, num;
-//        while (cont <= bloq) {
-//            while (i < filas && cont <= bloq) {
-//                while (j < columnas && cont <= bloq) {
-//                    num = (int) (Math.random() * 2 + 0);
-//                    if (matrix[i][j] != 1 && num == 1) {
-//                        matrix[i][j] = num;
-//                        cont++;
-//                    }
-//                    j++;
-//                }
-//                j = 0;
-//                i++;
-//            }
-//            i = 0;
-//            j = 0;
-//        }
-//    }
     public int[][] getMatrix() {
         return matrix;
     }
